@@ -18,7 +18,6 @@
     }
 
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
@@ -26,28 +25,23 @@
       background: linear-gradient(180deg, #f8fafc 0%, #edf3ff 100%);
       min-height: 100vh;
     }
-
     .page {
       max-width: 1180px;
       margin: 0 auto;
       padding: 24px;
     }
-
     .hero, .layout {
       display: grid;
       gap: 20px;
     }
-
     .hero {
       grid-template-columns: 1fr;
       margin-bottom: 22px;
     }
-
     .layout {
       grid-template-columns: 1fr;
       align-items: start;
     }
-
     .panel {
       background: var(--card);
       border: 1px solid rgba(15, 23, 42, 0.08);
@@ -55,9 +49,7 @@
       box-shadow: var(--shadow);
       overflow: hidden;
     }
-
     .hero-main { padding: 28px; }
-
     .eyebrow {
       display: inline-block;
       padding: 6px 10px;
@@ -68,42 +60,35 @@
       font-weight: 700;
       margin-bottom: 12px;
     }
-
     h1 {
       margin: 0 0 10px;
       font-size: 2rem;
       line-height: 1.15;
     }
-
     .sub, .hint {
       color: var(--muted);
       line-height: 1.6;
     }
-
     .mini-card {
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 14px;
       background: #fbfdff;
     }
-
     .mini-card h3 {
       margin: 0 0 6px;
       font-size: 0.98rem;
     }
-
     .mini-card p {
       margin: 0;
       color: var(--muted);
       line-height: 1.6;
     }
-
     .progress-wrap {
       padding: 18px 22px;
       border-bottom: 1px solid var(--border);
       background: #fbfdff;
     }
-
     .progress-header {
       display: flex;
       justify-content: space-between;
@@ -112,17 +97,14 @@
       margin-bottom: 12px;
       flex-wrap: wrap;
     }
-
     .progress-title {
       font-weight: 700;
       font-size: 1rem;
     }
-
     .progress-subtitle {
       color: var(--muted);
       font-size: 0.92rem;
     }
-
     .progress-bar {
       width: 100%;
       height: 10px;
@@ -131,20 +113,17 @@
       overflow: hidden;
       margin-bottom: 16px;
     }
-
     .progress-fill {
       height: 100%;
       width: 20%;
       background: var(--accent-2);
       transition: width 0.25s ease;
     }
-
     .progress-steps {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 10px;
     }
-
     .progress-step {
       border: 1px solid var(--border);
       border-radius: 12px;
@@ -154,24 +133,20 @@
       color: var(--muted);
       background: #fff;
     }
-
     .progress-step.active {
       border-color: #93c5fd;
       background: #eff6ff;
       color: #1d4ed8;
       font-weight: 700;
     }
-
     .progress-step.complete {
       border-color: #bbf7d0;
       background: #f0fdf4;
       color: #166534;
       font-weight: 700;
     }
-
     .step-panel { display: none; }
     .step-panel.active { display: block; }
-
     .section-title {
       margin: 0;
       padding: 16px 22px;
@@ -179,36 +154,26 @@
       font-size: 1.02rem;
       border-bottom: 1px solid var(--border);
     }
-
     .section-body {
       padding: 20px 22px 22px;
     }
-
     .grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 16px;
     }
-
     .field {
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
-
-    .field.full {
-      grid-column: 1 / -1;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
+    .field.full { grid-column: 1 / -1; }
+    .field.third { grid-column: span 1; }
+    .hidden { display: none !important; }
     label {
       font-size: 0.94rem;
       font-weight: 700;
     }
-
     input, select, textarea {
       width: 100%;
       border: 1px solid var(--border);
@@ -220,23 +185,16 @@
       outline: none;
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
-
     input:focus, select:focus, textarea:focus {
       border-color: var(--accent-2);
       box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.12);
     }
-
     textarea {
       min-height: 120px;
       resize: vertical;
     }
-
-    input[type="file"] {
-      padding: 10px;
-    }
-
+    input[type="file"] { padding: 10px; }
     .required { color: #b91c1c; }
-
     .actions {
       display: flex;
       align-items: center;
@@ -247,13 +205,11 @@
       border-top: 1px solid var(--border);
       background: #fbfdff;
     }
-
     .btn-row {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
     }
-
     button {
       border: 0;
       border-radius: 12px;
@@ -262,46 +218,22 @@
       font-weight: 700;
       cursor: pointer;
     }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .btn-secondary {
-      background: #e5e7eb;
-      color: #111827;
-    }
-
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-secondary { background: #e5e7eb; color: #111827; }
     .btn-ghost {
       background: #fff;
       color: #111827;
       border: 1px solid var(--border);
     }
-
-    button:disabled {
-      opacity: 0.65;
-      cursor: not-allowed;
-    }
-
+    button:disabled { opacity: 0.65; cursor: not-allowed; }
     @media (max-width: 760px) {
-      .grid,
-      .progress-steps {
-        grid-template-columns: 1fr;
-      }
-
-      .page {
-        padding: 14px;
-      }
-
+      .grid, .progress-steps { grid-template-columns: 1fr; }
+      .page { padding: 14px; }
       .hero-main, .section-body, .actions, .progress-wrap {
         padding-left: 16px;
         padding-right: 16px;
       }
-
-      h1 {
-        font-size: 1.65rem;
-      }
+      h1 { font-size: 1.65rem; }
     }
   </style>
 </head>
@@ -356,14 +288,6 @@
                   <label for="reportSubmissionTime">Report Submission Time <span class="required">*</span></label>
                   <input id="reportSubmissionTime" name="reportSubmissionTime" type="datetime-local" required />
                 </div>
-                <div class="field">
-                  <label for="bodyCameraActive">Body Camera Active? <span class="required">*</span></label>
-                  <select id="bodyCameraActive" name="bodyCameraActive" required>
-                    <option value="">Select</option>
-                    <option>Yes</option>
-                    <option>No</option>
-                  </select>
-                </div>
               </div>
             </div>
           </section>
@@ -389,6 +313,7 @@
                     <option>Warrant Service</option>
                     <option>Disorderly Conduct</option>
                     <option>Other</option>
+                    <option>Unknown</option>
                   </select>
                 </div>
                 <div class="field">
@@ -400,8 +325,19 @@
                   <input id="timeOfIncident" name="timeOfIncident" type="time" required />
                 </div>
                 <div class="field full">
-                  <label for="locationOfIncident">Location of Incident <span class="required">*</span></label>
-                  <input id="locationOfIncident" name="locationOfIncident" type="text" required />
+                  <label for="incidentAddress">Address <span class="required">*</span></label>
+                  <input id="incidentAddress" name="incidentAddress" type="text" required />
+                </div>
+                <div class="field">
+                  <label for="incidentState">State <span class="required">*</span></label>
+                  <select id="incidentState" name="incidentState" required>
+                    <option value="">Select</option>
+                    <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option><option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option><option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option><option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option><option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option><option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option><option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option><option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option><option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option><option>Unknown</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="incidentZip">ZIP <span class="required">*</span></label>
+                  <input id="incidentZip" name="incidentZip" type="text" required />
                 </div>
               </div>
             </div>
@@ -412,35 +348,46 @@
             <div class="section-body">
               <div class="grid">
                 <div class="field">
-                  <label for="subjectId">Subject ID</label>
-                  <input id="subjectId" name="subjectId" type="text" />
+                  <label for="subjectId">Subject ID <span class="required">*</span></label>
+                  <input id="subjectId" name="subjectId" type="text" required />
                 </div>
                 <div class="field">
                   <label for="subjectName">Subject Name <span class="required">*</span></label>
                   <input id="subjectName" name="subjectName" type="text" required />
                 </div>
                 <div class="field">
-                  <label for="age">Age</label>
-                  <input id="age" name="age" type="number" min="0" max="120" />
+                  <label for="age">Age <span class="required">*</span></label>
+                  <input id="age" name="age" type="number" min="0" max="120" required />
                 </div>
                 <div class="field">
-                  <label for="gender">Gender</label>
-                  <select id="gender" name="gender">
+                  <label for="gender">Gender <span class="required">*</span></label>
+                  <select id="gender" name="gender" required>
                     <option value="">Select</option>
                     <option>Male</option>
                     <option>Female</option>
                     <option>Non-binary</option>
-                    <option>Unknown</option>
                     <option>Other</option>
+                    <option>Unknown</option>
                   </select>
                 </div>
                 <div class="field">
-                  <label for="raceEthnicity">Race/Ethnicity</label>
-                  <input id="raceEthnicity" name="raceEthnicity" type="text" />
+                  <label for="raceEthnicity">Race/Ethnicity <span class="required">*</span></label>
+                  <select id="raceEthnicity" name="raceEthnicity" required>
+                    <option value="">Select</option>
+                    <option>American Indian or Alaska Native</option>
+                    <option>Asian</option>
+                    <option>Black or African American</option>
+                    <option>Native Hawaiian or Other Pacific Islander</option>
+                    <option>White</option>
+                    <option>Hispanic or Latino</option>
+                    <option>Two or More Races</option>
+                    <option>Other</option>
+                    <option>Unknown</option>
+                  </select>
                 </div>
                 <div class="field">
-                  <label for="subjectCondition">Subject Condition</label>
-                  <select id="subjectCondition" name="subjectCondition">
+                  <label for="subjectCondition">Subject Condition <span class="required">*</span></label>
+                  <select id="subjectCondition" name="subjectCondition" required>
                     <option value="">Select</option>
                     <option>Calm</option>
                     <option>Resisting</option>
@@ -453,8 +400,8 @@
                   </select>
                 </div>
                 <div class="field">
-                  <label for="subjectArmed">Was the subject armed?</label>
-                  <select id="subjectArmed" name="subjectArmed">
+                  <label for="subjectArmed">Was the subject armed? <span class="required">*</span></label>
+                  <select id="subjectArmed" name="subjectArmed" required>
                     <option value="">Select</option>
                     <option>Yes</option>
                     <option>No</option>
@@ -462,12 +409,12 @@
                   </select>
                 </div>
                 <div class="field hidden" id="subjectWeaponField">
-                  <label for="subjectWeapon">Weapon possessed by subject</label>
+                  <label for="subjectWeapon">Weapon possessed by subject <span class="required">*</span></label>
                   <input id="subjectWeapon" name="subjectWeapon" type="text" />
                 </div>
                 <div class="field">
-                  <label for="medicalTreatmentRequired">Medical Treatment Required</label>
-                  <select id="medicalTreatmentRequired" name="medicalTreatmentRequired">
+                  <label for="medicalTreatmentRequired">Medical Treatment Required <span class="required">*</span></label>
+                  <select id="medicalTreatmentRequired" name="medicalTreatmentRequired" required>
                     <option value="">Select</option>
                     <option>Yes</option>
                     <option>No</option>
@@ -475,12 +422,12 @@
                   </select>
                 </div>
                 <div class="field full">
-                  <label for="subjectMedicalHistory">Subject Medical History</label>
-                  <textarea id="subjectMedicalHistory" name="subjectMedicalHistory"></textarea>
+                  <label for="subjectMedicalHistory">Subject Medical History <span class="required">*</span></label>
+                  <textarea id="subjectMedicalHistory" name="subjectMedicalHistory" required></textarea>
                 </div>
                 <div class="field full">
-                  <label for="injuriesToSubject">Injuries to Subject</label>
-                  <textarea id="injuriesToSubject" name="injuriesToSubject"></textarea>
+                  <label for="injuriesToSubject">Injuries to Subject <span class="required">*</span></label>
+                  <textarea id="injuriesToSubject" name="injuriesToSubject" required></textarea>
                 </div>
               </div>
             </div>
@@ -499,16 +446,28 @@
                   <input id="officerName" name="officerName" type="text" required />
                 </div>
                 <div class="field">
-                  <label for="rank">Rank</label>
-                  <input id="rank" name="rank" type="text" />
+                  <label for="rank">Rank <span class="required">*</span></label>
+                  <select id="rank" name="rank" required>
+                    <option value="">Select</option>
+                    <option>Officer</option>
+                    <option>Corporal</option>
+                    <option>Sergeant</option>
+                    <option>Lieutenant</option>
+                    <option>Captain</option>
+                    <option>Major</option>
+                    <option>Deputy Chief</option>
+                    <option>Chief</option>
+                    <option>Detective</option>
+                    <option>Unknown</option>
+                  </select>
                 </div>
                 <div class="field">
-                  <label for="division">Division</label>
-                  <input id="division" name="division" type="text" />
+                  <label for="division">Division <span class="required">*</span></label>
+                  <input id="division" name="division" type="text" required />
                 </div>
                 <div class="field full">
-                  <label for="additionalOfficers">Additional Officer(s)</label>
-                  <textarea id="additionalOfficers" name="additionalOfficers"></textarea>
+                  <label for="additionalOfficers">Additional Officer(s) <span class="required">*</span></label>
+                  <textarea id="additionalOfficers" name="additionalOfficers" required></textarea>
                 </div>
                 <div class="field">
                   <label for="forceOccurred">Was force used? <span class="required">*</span></label>
@@ -516,6 +475,7 @@
                     <option value="">Select</option>
                     <option>Yes</option>
                     <option>No</option>
+                    <option>Unknown</option>
                   </select>
                 </div>
               </div>
@@ -523,25 +483,36 @@
               <div id="forceSection" class="hidden" style="margin-top:16px;">
                 <div class="grid">
                   <div class="field">
-                    <label for="forceNecessary">Was the force necessary?</label>
+                    <label for="bodyCameraActive">Body Camera Active? <span class="required">*</span></label>
+                    <select id="bodyCameraActive" name="bodyCameraActive">
+                      <option value="">Select</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                      <option>Unknown</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="forceNecessary">Was the force necessary? <span class="required">*</span></label>
                     <select id="forceNecessary" name="forceNecessary">
                       <option value="">Select</option>
                       <option>Yes</option>
                       <option>No</option>
                       <option>Undetermined</option>
+                      <option>Unknown</option>
                     </select>
                   </div>
                   <div class="field">
-                    <label for="forceUsedToSubdue">Was Force Used to Subdue the Subject?</label>
+                    <label for="forceUsedToSubdue">Was Force Used to Subdue the Subject? <span class="required">*</span></label>
                     <select id="forceUsedToSubdue" name="forceUsedToSubdue">
                       <option value="">Select</option>
                       <option>Yes</option>
                       <option>No</option>
                       <option>Partially</option>
+                      <option>Unknown</option>
                     </select>
                   </div>
                   <div class="field">
-                    <label for="typeOfForceUsed">Type of Force Used</label>
+                    <label for="typeOfForceUsed">Type of Force Used <span class="required">*</span></label>
                     <select id="typeOfForceUsed" name="typeOfForceUsed">
                       <option value="">Select</option>
                       <option>Physical Control</option>
@@ -553,44 +524,58 @@
                       <option>Canine</option>
                       <option>Firearm</option>
                       <option>Other</option>
+                      <option>Unknown</option>
                     </select>
                   </div>
                   <div class="field">
-                    <label for="forceSeverityLevel">Force Severity Level</label>
+                    <label for="forceSeverityLevel">Force Severity Level <span class="required">*</span></label>
                     <select id="forceSeverityLevel" name="forceSeverityLevel">
                       <option value="">Select</option>
                       <option>Level 1 - Physical Control</option>
                       <option>Level 2 - Takedown / Control Technique</option>
                       <option>Level 3 - OC / Taser / Impact Weapon</option>
                       <option>Level 4 - Deadly Force</option>
+                      <option>Unknown</option>
                     </select>
                   </div>
                   <div class="field">
-                    <label for="durationOfForceApplied">Duration of Force Applied</label>
-                    <input id="durationOfForceApplied" name="durationOfForceApplied" type="text" placeholder="e.g. 30 seconds" />
+                    <label for="durationValue">Duration of Force <span class="required">*</span></label>
+                    <input id="durationValue" name="durationValue" type="number" min="0" step="1" />
                   </div>
                   <div class="field">
-                    <label for="officerUsedWeapon">Did the Officer Use a Weapon?</label>
+                    <label for="durationUnit">Duration Unit <span class="required">*</span></label>
+                    <select id="durationUnit" name="durationUnit">
+                      <option value="">Select</option>
+                      <option>Seconds</option>
+                      <option>Minutes</option>
+                      <option>Hours</option>
+                      <option>Unknown</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="officerUsedWeapon">Did the Officer Use a Weapon? <span class="required">*</span></label>
                     <select id="officerUsedWeapon" name="officerUsedWeapon">
                       <option value="">Select</option>
                       <option>Yes</option>
                       <option>No</option>
+                      <option>Unknown</option>
                     </select>
                   </div>
                   <div class="field hidden" id="weaponUsedField">
-                    <label for="weaponUsedByOfficer">Weapon Used by Officer</label>
+                    <label for="weaponUsedByOfficer">Weapon Used by Officer <span class="required">*</span></label>
                     <input id="weaponUsedByOfficer" name="weaponUsedByOfficer" type="text" />
                   </div>
                   <div class="field">
-                    <label for="deadlyForce">Use of Deadly Force</label>
+                    <label for="deadlyForce">Use of Deadly Force <span class="required">*</span></label>
                     <select id="deadlyForce" name="deadlyForce">
                       <option value="">Select</option>
                       <option>Yes</option>
                       <option>No</option>
+                      <option>Unknown</option>
                     </select>
                   </div>
                   <div class="field">
-                    <label for="officerWarnedSubject">Did the Officer Warn the Subject?</label>
+                    <label for="officerWarnedSubject">Did the Officer Warn the Subject? <span class="required">*</span></label>
                     <select id="officerWarnedSubject" name="officerWarnedSubject">
                       <option value="">Select</option>
                       <option>Yes</option>
@@ -598,16 +583,32 @@
                       <option>Unknown</option>
                     </select>
                   </div>
-                  <div class="field full">
-                    <label for="reasonForForce">Reason for Force</label>
-                    <textarea id="reasonForForce" name="reasonForForce"></textarea>
+                  <div class="field">
+                    <label for="reasonForForce">Reason for Force <span class="required">*</span></label>
+                    <select id="reasonForForce" name="reasonForForce">
+                      <option value="">Select</option>
+                      <option>Self-Defense</option>
+                      <option>Defense of Another Officer</option>
+                      <option>Defense of Civilian</option>
+                      <option>Prevent Escape</option>
+                      <option>Overcome Active Resistance</option>
+                      <option>Overcome Assaultive Behavior</option>
+                      <option>Effect Arrest</option>
+                      <option>Prevent Self-Harm</option>
+                      <option>Other</option>
+                      <option>Unknown</option>
+                    </select>
+                  </div>
+                  <div class="field hidden" id="reasonOtherField">
+                    <label for="reasonForForceOther">Additional Reason Comments <span class="required">*</span></label>
+                    <input id="reasonForForceOther" name="reasonForForceOther" type="text" />
                   </div>
                   <div class="field full">
-                    <label for="specificActionsTaken">Specific Actions Taken</label>
+                    <label for="specificActionsTaken">Specific Actions Taken <span class="required">*</span></label>
                     <textarea id="specificActionsTaken" name="specificActionsTaken"></textarea>
                   </div>
                   <div class="field full">
-                    <label for="circumstancesLeadingToForce">Circumstances Leading to Force</label>
+                    <label for="circumstancesLeadingToForce">Circumstances Leading to Force <span class="required">*</span></label>
                     <textarea id="circumstancesLeadingToForce" name="circumstancesLeadingToForce"></textarea>
                   </div>
                 </div>
@@ -620,12 +621,12 @@
             <div class="section-body">
               <div class="grid">
                 <div class="field full">
-                  <label for="additionalComments">Additional Comments</label>
-                  <textarea id="additionalComments" name="additionalComments"></textarea>
+                  <label for="additionalComments">Additional Comments <span class="required">*</span></label>
+                  <textarea id="additionalComments" name="additionalComments" required></textarea>
                 </div>
                 <div class="field full">
-                  <label for="attachment">File Attachment</label>
-                  <input id="attachment" name="attachment" type="file" />
+                  <label for="attachment">File Attachment <span class="required">*</span></label>
+                  <input id="attachment" name="attachment" type="file" required />
                 </div>
               </div>
             </div>
@@ -654,15 +655,36 @@
     const progressText = document.getElementById("progressText");
     const progressSteps = Array.from(document.querySelectorAll(".progress-step"));
     const stepPanels = Array.from(document.querySelectorAll(".step-panel"));
-
     const subjectArmed = document.getElementById("subjectArmed");
     const subjectWeaponField = document.getElementById("subjectWeaponField");
+    const subjectWeapon = document.getElementById("subjectWeapon");
     const officerUsedWeapon = document.getElementById("officerUsedWeapon");
     const weaponUsedField = document.getElementById("weaponUsedField");
+    const weaponUsedByOfficer = document.getElementById("weaponUsedByOfficer");
     const forceOccurred = document.getElementById("forceOccurred");
     const forceSection = document.getElementById("forceSection");
     const reportSubmissionTime = document.getElementById("reportSubmissionTime");
     const mainLayout = document.getElementById("mainLayout");
+    const bodyCameraActive = document.getElementById("bodyCameraActive");
+    const reasonForForce = document.getElementById("reasonForForce");
+    const reasonOtherField = document.getElementById("reasonOtherField");
+    const reasonForForceOther = document.getElementById("reasonForForceOther");
+
+    const forceRequiredIds = [
+      "bodyCameraActive",
+      "forceNecessary",
+      "forceUsedToSubdue",
+      "typeOfForceUsed",
+      "forceSeverityLevel",
+      "durationValue",
+      "durationUnit",
+      "officerUsedWeapon",
+      "deadlyForce",
+      "officerWarnedSubject",
+      "reasonForForce",
+      "specificActionsTaken",
+      "circumstancesLeadingToForce"
+    ];
 
     const stepTitles = [
       "Step 1 of 5 — Submission Details",
@@ -682,26 +704,44 @@
       reportSubmissionTime.value = local;
     }
 
+    function setRequired(id, required) {
+      const el = document.getElementById(id);
+      if (el) el.required = required;
+    }
+
     function toggleConditionalFields() {
-      subjectWeaponField.classList.toggle("hidden", subjectArmed.value !== "Yes");
-      weaponUsedField.classList.toggle("hidden", officerUsedWeapon.value !== "Yes");
-      forceSection.classList.toggle("hidden", forceOccurred.value !== "Yes");
+      const subjectArmedYes = subjectArmed.value === "Yes";
+      subjectWeaponField.classList.toggle("hidden", !subjectArmedYes);
+      subjectWeapon.required = subjectArmedYes;
+
+      const officerWeaponYes = officerUsedWeapon.value === "Yes";
+      weaponUsedField.classList.toggle("hidden", !officerWeaponYes);
+      weaponUsedByOfficer.required = officerWeaponYes;
+
+      const forceUsed = forceOccurred.value === "Yes";
+      forceSection.classList.toggle("hidden", !forceUsed);
+      forceRequiredIds.forEach(id => setRequired(id, forceUsed));
+      if (!forceUsed) {
+        weaponUsedByOfficer.required = false;
+        reasonForForceOther.required = false;
+      }
+
+      const reasonOther = forceUsed && reasonForForce.value === "Other";
+      reasonOtherField.classList.toggle("hidden", !reasonOther);
+      reasonForForceOther.required = reasonOther;
     }
 
     function updateProgress() {
       stepPanels.forEach((panel, index) => {
         panel.classList.toggle("active", index === currentStep);
       });
-
       progressText.textContent = stepTitles[currentStep];
       progressFill.style.width = `${((currentStep + 1) / stepPanels.length) * 100}%`;
-
       progressSteps.forEach((step, index) => {
         step.classList.remove("active", "complete");
         if (index < currentStep) step.classList.add("complete");
         if (index === currentStep) step.classList.add("active");
       });
-
       prevBtn.disabled = currentStep === 0;
       nextBtn.classList.toggle("hidden", currentStep === stepPanels.length - 1);
       submitBtn.classList.toggle("hidden", currentStep !== stepPanels.length - 1);
@@ -710,7 +750,6 @@
     function validateCurrentStep() {
       const activePanel = stepPanels[currentStep];
       const fields = Array.from(activePanel.querySelectorAll("input, select, textarea"));
-
       for (const field of fields) {
         if (field.closest(".hidden")) continue;
         if (!field.checkValidity()) {
@@ -718,7 +757,6 @@
           return false;
         }
       }
-
       return true;
     }
 
@@ -758,6 +796,7 @@
     subjectArmed.addEventListener("change", toggleConditionalFields);
     officerUsedWeapon.addEventListener("change", toggleConditionalFields);
     forceOccurred.addEventListener("change", toggleConditionalFields);
+    reasonForForce.addEventListener("change", toggleConditionalFields);
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -768,7 +807,6 @@
       const attachmentName = attachmentInput && attachmentInput.files && attachmentInput.files[0]
         ? attachmentInput.files[0].name
         : "No attachment included";
-
       const submittedBy = document.getElementById("submittedBy").value || "Officer";
       const caseNumber = document.getElementById("caseNumber").value || "N/A";
       const incidentDate = document.getElementById("dateOfIncident").value || "N/A";
