@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Use of Force Reporting System</title>
+  <style>
+    :root {
+      --bg: #f3f6fb;
+      --card: #ffffff;
+      --text: #152033;
+      --muted: #5c6677;
+      --border: #d7deea;
+      --accent: #0f172a;
+      --accent-2: #1d4ed8;
+      --success: #166534;
+      --success-bg: #ecfdf3;
+      --error: #b91c1c;
+      --error-bg: #fef2f2;
+      --section: #eef4ff;
+      --shadow: 0 14px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #f8fafc 0%, #edf3ff 100%);
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .hero, .layout {
+      display: grid;
+      gap: 20px;
+    }
+
+    .hero {
+      grid-template-columns: 1.3fr 0.7fr;
+      margin-bottom: 22px;
+    }
+
+    .layout {
+      grid-template-columns: 1fr 320px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-main { padding: 28px; }
+    .hero-side {
+      padding: 22px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #e7efff;
+      color: #1e40af;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 2rem;
+      line-height: 1.15;
+    }
+
+    .sub, .hint, .checklist, .actions p, .mini-card p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .mini-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      background: #fbfdff;
+    }
+
+    .mini-card h3 {
+      margin: 0 0 6px;
+      font-size: 0.98rem;
+    }
+
+    .progress-wrap {
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--border);
+      background: #fbfdff;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .progress-title {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .progress-subtitle {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 20%;
+      background: var(--accent-2);
+      transition: width 0.25s ease;
+    }
+
+    .progress-steps {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+    }
+
+    .progress-step {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px;
+      font-size: 0.84rem;
+      line-height: 1.35;
+      color: var(--muted);
+      background: #fff;
+    }
+
+    .progress-step.active {
+      border-color: #93c5fd;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-weight: 700;
+    }
+
+    .progress-step.complete {
+      border-color: #bbf7d0;
+      background: #f0fdf4;
+      color: #166534;
+      font-weight: 700;
+    }
+
+    .step-panel {
+      display: none;
+    }
+
+    .step-panel.active {
+      display: block;
+    }
+
+    .section-title {
+      margin: 0;
+      padding: 16px 22px;
+      background: var(--section);
+      font-size: 1.02rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-body {
+      padding: 20px 22px 22px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    label {
+      font-size: 0.94rem;
+      font-weight: 700;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 0.98rem;
+      color: var(--text);
+      background: #fff;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.12);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    input[type="file"] {
+      padding: 10px;
+    }
+
+    .required { color: var(--error); }
+
+    .sidebar {
+      position: sticky;
+      top: 18px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .status, .setup, .workflow {
+      padding: 18px;
+    }
+
+    .status h2, .setup h2, .workflow h2 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .status-box {
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 0.93rem;
+      line-height: 1.5;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+    }
+
+    .status-box.success {
+      color: var(--success);
+      background: var(--success-bg);
+      border-color: #bbf7d0;
+    }
+
+    .status-box.error {
+      color: var(--error);
+      background: var(--error-bg);
+      border-color: #fecaca;
+    }
+
+    .checklist {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 0.92rem;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 22px;
+      border-top: 1px solid var(--border);
+      background: #fbfdff;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 13px 18px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .btn-ghost {
+      background: #fff;
+      color: #111827;
+      border: 1px solid var(--border);
+    }
+
+    button:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+
+    .review-summary, .success-panel {
+      display: grid;
+      gap: 16px;
+    }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .review-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .review-card h3 {
+      margin: 0;
+      padding: 14px 16px;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.98rem;
+    }
+
+    .review-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .review-list li {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 12px;
+      padding: 12px 16px;
+      border-bottom: 1px solid #eef2f7;
+      font-size: 0.94rem;
+      line-height: 1.45;
+    }
+
+    .review-list li:last-child {
+      border-bottom: 0;
+    }
+
+    .review-label {
+      font-weight: 700;
+      color: #334155;
+    }
+
+    .review-value.empty {
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .success-panel {
+      border: 1px solid #bbf7d0;
+      background: #f0fdf4;
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .success-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    @media (max-width: 980px) {
+      .hero, .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .grid,
+      .progress-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .page {
+        padding: 14px;
+      }
+
+      .hero-main, .hero-side, .section-body, .actions, .progress-wrap {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      h1 {
+        font-size: 1.65rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <div class="panel hero-main">
+        <div class="eyebrow">Deployable multi-step static app</div>
+        <h1>Use of Force Reporting System</h1>
+        <p class="sub">
+          This version organizes the form into sequential steps, adds conditional fields, standardizes key dropdowns,
+          and submits directly to Supabase. It is designed to be much simpler to complete than a long single-page form.
+        </p>
+      </div>
+      <div class="panel hero-side">
+        <div class="mini-card">
+          <h3>Included</h3>
+          <p>Multi-step flow, progress indicator, conditional fields, required submission metadata, confirmation review step, PDF export, email draft option, free-text comments, and file attachment input.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Important</h3>
+          <p>The attachment field is included in the HTML flow, but file upload storage is not wired to Supabase Storage yet.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <main class="panel">
+        <div class="progress-wrap">
+          <div class="progress-header">
+            <div>
+              <div class="progress-title">Report progress</div>
+              <div class="progress-subtitle" id="progressText">Step 1 of 6 — Submission Details</div>
+            </div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-steps" id="progressSteps">
+            <div class="progress-step active">1. Submission</div>
+            <div class="progress-step">2. Incident</div>
+            <div class="progress-step">3. Subject</div>
+            <div class="progress-step">4. Officer & Force</div>
+            <div class="progress-step">5. Review & Comments</div>
+            <div class="progress-step">6. Confirm</div>
+          </div>
+        </div>
+
+        <form id="incidentForm">
+          <section class="step-panel active" data-step="0">
+            <h2 class="section-title">Submission Details</h2>
+            <div class="section-body">
+              <div class="grid">
+                <div class="field">
+                  <label for="submittedBy">Submitted By <span class="required">*</span></label>
+                  <input id="submittedBy" name="submittedBy" type="text" required />
+                </div>
+                <div class="field">
+                  <label for="badgeNumber">Badge Number <span class="required">*</span></label>
+                  <input id="badgeNumber" name="badgeNumber" type="text" required />
+                </div>
+                <div class="field">
+                  <label for="reportSubmissionTime">Report Submission Time <span class="required">*</span></label>
+                  <input id="reportSubmissionTime" name="reportSubmissionTime" type="datetime-local" required />
+                </div>
+                <div class="field">
+                  <label for="bodyCameraActive">Body Camera Active? <span class="required">*</span></label>
+                  <select id="bodyCameraActive" name="bodyCameraActive" required>
+                    <option value="">Select</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="step-panel" data-step="1">
+            <h2 class="section-title">Incident Details</h2>
+            <div class="section-body">
+              <div class="grid">
+                <div class="field">
+                  <label for="caseNumber">Case Number <span class="required">*</span></label>
+                  <input id="caseNumber" name="caseNumber" type="text" required />
+                </div>
+                <div class="field">
+                  <label for="incidentType">Incident Type <span class="required">*</span></label>
+                  <select id="incidentType" name="incidentType" required>
+                    <option value="">Select</option>
+                    <option>Arrest</option>
+                    <option>Resisting Arrest</option>
+                    <option>Traffic Stop</option>
+                    <option>Domestic Disturbance</option>
+                    <option>Mental Health Call</option>
+                    <option>Suspicious Person</option>
+                    <option>Warrant Service</option>
+                    <option>Disorderly Conduct</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="dateOfIncident">Date of Incident <span class="required">*</span></label>
+                  <input id="dateOfIncident" name="dateOfIncident" type="date" required />
+                </div>
+                <div class="field">
+                  <label for="timeOfIncident">Time of Incident <span class="required">*</span></label>
+                  <input id="timeOfIncident" name="timeOfIncident" type="time" required />
+                </div>
+                <div class="field full">
+                  <label for="locationOfIncident">Location of Incident <span class="required">*</span></label>
+                  <input id="locationOfIncident" name="locationOfIncident" type="text" required />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="step-panel" data-step="2">
+            <h2 class="section-title">Subject Information</h2>
+            <div class="section-body">
+              <div class="grid">
+                <div class="field">
+                  <label for="subjectId">Subject ID</label>
+                  <input id="subjectId" name="subjectId" type="text" />
+                </div>
+                <div class="field">
+                  <label for="subjectName">Subject Name <span class="required">*</span></label>
+                  <input id="subjectName" name="subjectName" type="text" required />
+                </div>
+                <div class="field">
+                  <label for="age">Age</label>
+                  <input id="age" name="age" type="number" min="0" max="120" />
+                </div>
+                <div class="field">
+                  <label for="gender">Gender</label>
+                  <select id="gender" name="gender">
+                    <option value="">Select</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Non-binary</option>
+                    <option>Unknown</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="raceEthnicity">Race/Ethnicity</label>
+                  <input id="raceEthnicity" name="raceEthnicity" type="text" />
+                </div>
+                <div class="field">
+                  <label for="subjectCondition">Subject Condition</label>
+                  <select id="subjectCondition" name="subjectCondition">
+                    <option value="">Select</option>
+                    <option>Calm</option>
+                    <option>Resisting</option>
+                    <option>Aggressive</option>
+                    <option>Fleeing</option>
+                    <option>Intoxicated</option>
+                    <option>Mental Crisis</option>
+                    <option>Injured</option>
+                    <option>Unknown</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="subjectArmed">Was the subject armed?</label>
+                  <select id="subjectArmed" name="subjectArmed">
+                    <option value="">Select</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                    <option>Unknown</option>
+                  </select>
+                </div>
+                <div class="field hidden" id="subjectWeaponField">
+                  <label for="subjectWeapon">Weapon possessed by subject</label>
+                  <input id="subjectWeapon" name="subjectWeapon" type="text" />
+                </div>
+                <div class="field">
+                  <label for="medicalTreatmentRequired">Medical Treatment Required</label>
+                  <select id="medicalTreatmentRequired" name="medicalTreatmentRequired">
+                    <option value="">Select</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                    <option>Unknown</option>
+                  </select>
+                </div>
+                <div class="field full">
+                  <label for="subjectMedicalHistory">Subject Medical History</label>
+                  <textarea id="subjectMedicalHistory" name="subjectMedicalHistory"></textarea>
+                </div>
+                <div class="field full">
+                  <label for="injuriesToSubject">Injuries to Subject</label>
+                  <textarea id="injuriesToSubject" name="injuriesToSubject"></textarea>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="step-panel" data-step="3">
+            <h2 class="section-title">Officer and Force Details</h2>
+            <div class="section-body">
+              <div class="grid">
+                <div class="field">
+                  <label for="officerId">Officer ID <span class="required">*</span></label>
+                  <input id="officerId" name="officerId" type="text" required />
+                </div>
+                <div class="field">
+                  <label for="officerName">Officer Name <span class="required">*</span></label>
+                  <input id="officerName" name="officerName" type="text" required />
+                </div>
+                <div class="field">
+                  <label for="rank">Rank</label>
+                  <input id="rank" name="rank" type="text" />
+                </div>
+                <div class="field">
+                  <label for="division">Division</label>
+                  <input id="division" name="division" type="text" />
+                </div>
+                <div class="field full">
+                  <label for="additionalOfficers">Additional Officer(s)</label>
+                  <textarea id="additionalOfficers" name="additionalOfficers"></textarea>
+                </div>
+                <div class="field">
+                  <label for="forceOccurred">Was force used? <span class="required">*</span></label>
+                  <select id="forceOccurred" name="forceOccurred" required>
+                    <option value="">Select</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+              </div>
+
+              <div id="forceSection" class="hidden" style="margin-top:16px;">
+                <div class="grid">
+                  <div class="field">
+                    <label for="forceNecessary">Was the force necessary?</label>
+                    <select id="forceNecessary" name="forceNecessary">
+                      <option value="">Select</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                      <option>Undetermined</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="forceUsedToSubdue">Was Force Used to Subdue the Subject?</label>
+                    <select id="forceUsedToSubdue" name="forceUsedToSubdue">
+                      <option value="">Select</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                      <option>Partially</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="typeOfForceUsed">Type of Force Used</label>
+                    <select id="typeOfForceUsed" name="typeOfForceUsed">
+                      <option value="">Select</option>
+                      <option>Physical Control</option>
+                      <option>Takedown</option>
+                      <option>Joint Lock</option>
+                      <option>OC Spray</option>
+                      <option>Taser</option>
+                      <option>Impact Weapon</option>
+                      <option>Canine</option>
+                      <option>Firearm</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="forceSeverityLevel">Force Severity Level</label>
+                    <select id="forceSeverityLevel" name="forceSeverityLevel">
+                      <option value="">Select</option>
+                      <option>Level 1 - Physical Control</option>
+                      <option>Level 2 - Takedown / Control Technique</option>
+                      <option>Level 3 - OC / Taser / Impact Weapon</option>
+                      <option>Level 4 - Deadly Force</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="durationOfForceApplied">Duration of Force Applied</label>
+                    <input id="durationOfForceApplied" name="durationOfForceApplied" type="text" placeholder="e.g. 30 seconds" />
+                  </div>
+                  <div class="field">
+                    <label for="officerUsedWeapon">Did the Officer Use a Weapon?</label>
+                    <select id="officerUsedWeapon" name="officerUsedWeapon">
+                      <option value="">Select</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                    </select>
+                  </div>
+                  <div class="field hidden" id="weaponUsedField">
+                    <label for="weaponUsedByOfficer">Weapon Used by Officer</label>
+                    <input id="weaponUsedByOfficer" name="weaponUsedByOfficer" type="text" />
+                  </div>
+                  <div class="field">
+                    <label for="deadlyForce">Use of Deadly Force</label>
+                    <select id="deadlyForce" name="deadlyForce">
+                      <option value="">Select</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="officerWarnedSubject">Did the Officer Warn the Subject?</label>
+                    <select id="officerWarnedSubject" name="officerWarnedSubject">
+                      <option value="">Select</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                      <option>Unknown</option>
+                    </select>
+                  </div>
+                  <div class="field full">
+                    <label for="reasonForForce">Reason for Force</label>
+                    <textarea id="reasonForForce" name="reasonForForce"></textarea>
+                  </div>
+                  <div class="field full">
+                    <label for="specificActionsTaken">Specific Actions Taken</label>
+                    <textarea id="specificActionsTaken" name="specificActionsTaken"></textarea>
+                  </div>
+                  <div class="field full">
+                    <label for="circumstancesLeadingToForce">Circumstances Leading to Force</label>
+                    <textarea id="circumstancesLeadingToForce" name="circumstancesLeadingToForce"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="step-panel" data-step="4">
+            <h2 class="section-title">Review, Comments, and Attachments</h2>
+            <div class="section-body">
+              <div class="grid">
+                <div class="field">
+                  <label for="reviewStatus">Review Status</label>
+                  <select id="reviewStatus" name="reviewStatus">
+                    <option value="Draft">Draft</option>
+                    <option value="Submitted">Submitted</option>
+                    <option value="Supervisor Review">Supervisor Review</option>
+                    <option value="IA Escalated">IA Escalated</option>
+                    <option value="Closed">Closed</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="iaEscalation">Escalate to Internal Affairs?</label>
+                  <select id="iaEscalation" name="iaEscalation">
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                  </select>
+                </div>
+                <div class="field full">
+                  <label for="supervisorComments">Supervisor Comments</label>
+                  <textarea id="supervisorComments" name="supervisorComments"></textarea>
+                </div>
+                <div class="field full">
+                  <label for="additionalComments">Additional Comments</label>
+                  <textarea id="additionalComments" name="additionalComments"></textarea>
+                </div>
+                <div class="field full">
+                  <label for="attachment">File Attachment</label>
+                  <input id="attachment" name="attachment" type="file" />
+                  <p class="hint">This input is present in the form, but attachment upload is not yet connected to Supabase Storage in this version.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="step-panel" data-step="5">
+            <h2 class="section-title">Confirmation</h2>
+            <div class="section-body">
+              <div class="review-summary">
+                <p class="hint">Review all entered information below before submitting. Use Previous if anything needs to be corrected.</p>
+                <div id="reviewSummary" class="review-grid"></div>
+              </div>
+            </div>
+          </section>
+
+          <div class="actions">
+            <p>Replace the config values in the script with your Supabase project URL and publishable key. Then deploy this as a static site.</p>
+            <div class="btn-row">
+              <button type="button" class="btn-ghost" id="prevBtn">Previous</button>
+              <button type="button" class="btn-secondary" id="nextBtn">Next</button>
+              <button type="button" class="btn-secondary" id="resetBtn">Reset</button>
+              <button type="submit" class="btn-primary hidden" id="submitBtn">Submit Report</button>
+              <button type="button" class="btn-secondary hidden" id="downloadPdfBtn">Download PDF</button>
+              <button type="button" class="btn-secondary hidden" id="emailBtn">Email Report</button>
+            </div>
+          </div>
+        </form>
+      </main>
+
+      <aside class="sidebar">
+        <section class="panel status">
+          <h2>Submission Status</h2>
+          <div id="statusBox" class="status-box">Ready to begin.</div>
+        </section>
+
+        <section class="panel workflow">
+          <h2>Sequential flow</h2>
+          <ul class="checklist">
+            <li>Start with reporter metadata and camera status.</li>
+            <li>Record incident basics before subject details.</li>
+            <li>Only show force-specific questions if force was used.</li>
+            <li>Finish with review status, comments, attachment, and final confirmation.</li>
+          </ul>
+        </section>
+
+        <section class="panel setup">
+          <h2>Deployment</h2>
+          <ul class="checklist">
+            <li>Save this file as <strong>index.html</strong>.</li>
+            <li>Run your Supabase SQL setup first.</li>
+            <li>Deploy the folder to Netlify, Vercel, GitHub Pages, or Cloudflare Pages.</li>
+          </ul>
+        </section>
+      </aside>
+    </section>
+  </div>
+
+  <script>
+    const SUPABASE_URL = "https://ftfqyzjzfzvtpinngpry.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_H0SfaEUskBSI1x3FrT1qJw_aPBnEvxV";
+    const SUPABASE_TABLE = "use_of_force_reports";
+
+    const form = document.getElementById("incidentForm");
+    const statusBox = document.getElementById("statusBox");
+    const submitBtn = document.getElementById("submitBtn");
+    const downloadPdfBtn = document.getElementById("downloadPdfBtn");
+    const emailBtn = document.getElementById("emailBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const prevBtn = document.getElementById("prevBtn");
+    const progressFill = document.getElementById("progressFill");
+    const progressText = document.getElementById("progressText");
+    const progressSteps = Array.from(document.querySelectorAll(".progress-step"));
+    const stepPanels = Array.from(document.querySelectorAll(".step-panel"));
+    const reviewSummary = document.getElementById("reviewSummary");
+
+    const subjectArmed = document.getElementById("subjectArmed");
+    const subjectWeaponField = document.getElementById("subjectWeaponField");
+    const officerUsedWeapon = document.getElementById("officerUsedWeapon");
+    const weaponUsedField = document.getElementById("weaponUsedField");
+    const forceOccurred = document.getElementById("forceOccurred");
+    const forceSection = document.getElementById("forceSection");
+    const reportSubmissionTime = document.getElementById("reportSubmissionTime");
+
+    const stepTitles = [
+      "Step 1 of 6 — Submission Details",
+      "Step 2 of 6 — Incident Details",
+      "Step 3 of 6 — Subject Information",
+      "Step 4 of 6 — Officer and Force Details",
+      "Step 5 of 6 — Review, Comments, and Attachments",
+      "Step 6 of 6 — Confirmation"
+    ];
+
+    const reviewSections = [
+      {
+        title: "Submission Details",
+        fields: [
+          ["Submitted By", "submittedBy"],
+          ["Badge Number", "badgeNumber"],
+          ["Report Submission Time", "reportSubmissionTime"],
+          ["Body Camera Active", "bodyCameraActive"],
+          ["Case Number", "caseNumber"]
+        ]
+      },
+      {
+        title: "Incident Details",
+        fields: [
+          ["Incident Type", "incidentType"],
+          ["Date of Incident", "dateOfIncident"],
+          ["Time of Incident", "timeOfIncident"],
+          ["Location of Incident", "locationOfIncident"]
+        ]
+      },
+      {
+        title: "Subject Information",
+        fields: [
+          ["Subject ID", "subjectId"],
+          ["Subject Name", "subjectName"],
+          ["Age", "age"],
+          ["Gender", "gender"],
+          ["Race / Ethnicity", "raceEthnicity"],
+          ["Subject Condition", "subjectCondition"],
+          ["Subject Medical History", "subjectMedicalHistory"],
+          ["Subject Armed", "subjectArmed"],
+          ["Subject Weapon", "subjectWeapon"],
+          ["Medical Treatment Required", "medicalTreatmentRequired"],
+          ["Injuries to Subject", "injuriesToSubject"]
+        ]
+      },
+      {
+        title: "Officer and Force Details",
+        fields: [
+          ["Officer ID", "officerId"],
+          ["Officer Name", "officerName"],
+          ["Rank", "rank"],
+          ["Division", "division"],
+          ["Additional Officers", "additionalOfficers"],
+          ["Force Occurred", "forceOccurred"],
+          ["Officer Used Weapon", "officerUsedWeapon"],
+          ["Weapon Used by Officer", "weaponUsedByOfficer"],
+          ["Deadly Force", "deadlyForce"],
+          ["Officer Warned Subject", "officerWarnedSubject"],
+          ["Force Necessary", "forceNecessary"],
+          ["Force Used to Subdue", "forceUsedToSubdue"],
+          ["Type of Force Used", "typeOfForceUsed"],
+          ["Force Severity Level", "forceSeverityLevel"],
+          ["Specific Actions Taken", "specificActionsTaken"],
+          ["Duration of Force Applied", "durationOfForceApplied"],
+          ["Reason for Force", "reasonForForce"],
+          ["Circumstances Leading to Force", "circumstancesLeadingToForce"]
+        ]
+      },
+      {
+        title: "Review and Attachments",
+        fields: [
+          ["Review Status", "reviewStatus"],
+          ["IA Escalation", "iaEscalation"],
+          ["Supervisor Comments", "supervisorComments"],
+          ["Additional Comments", "additionalComments"],
+          ["Attachment", "attachment"]
+        ]
+      }
+    ];
+
+    let currentStep = 0;
+    let lastSubmittedPayload = null;
+
+    function setStatus(message, type = "default") {
+      statusBox.textContent = message;
+      statusBox.className = "status-box" + (type === "success" ? " success" : type === "error" ? " error" : "");
+    }
+
+    function normalizeValue(value) {
+      if (typeof value !== "string") return value;
+      const trimmed = value.trim();
+      return trimmed === "" ? null : trimmed;
+    }
+
+    function setDefaultSubmissionTime() {
+      if (reportSubmissionTime.value) return;
+      const now = new Date();
+      const offset = now.getTimezoneOffset();
+      const local = new Date(now.getTime() - offset * 60000).toISOString().slice(0, 16);
+      reportSubmissionTime.value = local;
+    }
+
+    function toggleConditionalFields() {
+      subjectWeaponField.classList.toggle("hidden", subjectArmed.value !== "Yes");
+      weaponUsedField.classList.toggle("hidden", officerUsedWeapon.value !== "Yes");
+      forceSection.classList.toggle("hidden", forceOccurred.value !== "Yes");
+    }
+
+
+    function formatValue(name, value) {
+      if (value instanceof File) {
+        return value && value.name ? `${value.name} (${value.size || 0} bytes)` : "None provided";
+      }
+
+      if (value === null || value === undefined || value === "") return "Not provided";
+
+      if (name === "reportSubmissionTime" && value) {
+        const date = new Date(value);
+        if (!Number.isNaN(date.getTime())) {
+          return date.toLocaleString();
+        }
+      }
+
+      return String(value);
+    }
+
+    function buildReviewSummary() {
+      const formData = new FormData(form);
+      reviewSummary.innerHTML = reviewSections.map((section) => {
+        const rows = section.fields.map(([label, name]) => {
+          const rawValue = name === "attachment" ? formData.get(name) : formData.get(name);
+          const formatted = formatValue(name, rawValue);
+          const emptyClass = formatted === "Not provided" || formatted === "None provided" ? " empty" : "";
+          return `<li><span class="review-label">${label}</span><span class="review-value${emptyClass}">${formatted}</span></li>`;
+        }).join("");
+
+        return `<section class="review-card"><h3>${section.title}</h3><ul class="review-list">${rows}</ul></section>`;
+      }).join("");
+    }
+
+    function resetPostSubmitActions() {
+      lastSubmittedPayload = null;
+      downloadPdfBtn.classList.add("hidden");
+      emailBtn.classList.add("hidden");
+    }
+
+    function buildEmailBody() {
+      if (!lastSubmittedPayload) return "";
+
+      return Object.entries(lastSubmittedPayload)
+        .map(([key, value]) => `${key.replace(/_/g, " ")}: ${value ?? "Not provided"}`)
+        .join("\n");
+    }
+
+    function openPrintView() {
+      if (!lastSubmittedPayload) return;
+
+      const attachmentValue = document.getElementById("attachment").files[0]?.name || "Not provided";
+      const sectionsHtml = reviewSections.map((section) => {
+        const rows = section.fields.map(([label, name]) => {
+          let value;
+          if (name === "attachment") {
+            value = attachmentValue;
+          } else {
+            const raw = form.elements[name]?.value ?? "";
+            value = formatValue(name, raw);
+          }
+          return `<tr><td style="padding:8px 10px;border:1px solid #cbd5e1;font-weight:700;vertical-align:top;width:220px;">${label}</td><td style="padding:8px 10px;border:1px solid #cbd5e1;">${value}</td></tr>`;
+        }).join("");
+        return `<h2 style="margin:20px 0 10px;font-size:18px;">${section.title}</h2><table style="width:100%;border-collapse:collapse;font-family:Arial,sans-serif;font-size:14px;">${rows}</table>`;
+      }).join("");
+
+      const printWindow = window.open("", "_blank", "width=900,height=700");
+      if (!printWindow) {
+        setStatus("Popup blocked. Please allow popups to download the PDF from the print dialog.", "error");
+        return;
+      }
+
+      printWindow.document.write(`<!DOCTYPE html><html><head><title>Use of Force Report Summary</title></head><body style="font-family:Arial,sans-serif;padding:24px;color:#0f172a;"><h1 style="margin-top:0;">Use of Force Report Summary</h1><p>Generated ${new Date().toLocaleString()}</p>${sectionsHtml}</body></html>`);
+      printWindow.document.close();
+      printWindow.focus();
+      printWindow.print();
+    }
+
+    function updateProgress() {
+      stepPanels.forEach((panel, index) => {
+        panel.classList.toggle("active", index === currentStep);
+      });
+
+      progressText.textContent = stepTitles[currentStep];
+      if (currentStep === stepPanels.length - 1) buildReviewSummary();
+      progressFill.style.width = `${((currentStep + 1) / stepPanels.length) * 100}%`;
+
+      progressSteps.forEach((step, index) => {
+        step.classList.remove("active", "complete");
+        if (index < currentStep) step.classList.add("complete");
+        if (index === currentStep) step.classList.add("active");
+      });
+
+      prevBtn.disabled = currentStep === 0;
+      nextBtn.classList.toggle("hidden", currentStep === stepPanels.length - 1);
+      submitBtn.classList.toggle("hidden", currentStep !== stepPanels.length - 1);
+    }
+
+    function validateCurrentStep() {
+      const activePanel = stepPanels[currentStep];
+      const fields = Array.from(activePanel.querySelectorAll("input, select, textarea"));
+
+      for (const field of fields) {
+        if (field.closest(".hidden")) continue;
+        if (!field.checkValidity()) {
+          field.reportValidity();
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    function buildPayload(formData) {
+      return {
+        submitted_by: normalizeValue(formData.get("submittedBy")),
+        badge_number: normalizeValue(formData.get("badgeNumber")),
+        report_submission_time: normalizeValue(formData.get("reportSubmissionTime")),
+        body_camera_active: normalizeValue(formData.get("bodyCameraActive")),
+        case_number: normalizeValue(formData.get("caseNumber")),
+        incident_type: normalizeValue(formData.get("incidentType")),
+        date_of_incident: normalizeValue(formData.get("dateOfIncident")),
+        time_of_incident: normalizeValue(formData.get("timeOfIncident")),
+        location_of_incident: normalizeValue(formData.get("locationOfIncident")),
+        subject_id: normalizeValue(formData.get("subjectId")),
+        subject_name: normalizeValue(formData.get("subjectName")),
+        age: formData.get("age") ? Number(formData.get("age")) : null,
+        gender: normalizeValue(formData.get("gender")),
+        race_ethnicity: normalizeValue(formData.get("raceEthnicity")),
+        subject_condition: normalizeValue(formData.get("subjectCondition")),
+        subject_medical_history: normalizeValue(formData.get("subjectMedicalHistory")),
+        subject_armed: normalizeValue(formData.get("subjectArmed")),
+        subject_weapon: normalizeValue(formData.get("subjectWeapon")),
+        medical_treatment_required: normalizeValue(formData.get("medicalTreatmentRequired")),
+        injuries_to_subject: normalizeValue(formData.get("injuriesToSubject")),
+        officer_id: normalizeValue(formData.get("officerId")),
+        officer_name: normalizeValue(formData.get("officerName")),
+        rank: normalizeValue(formData.get("rank")),
+        division: normalizeValue(formData.get("division")),
+        additional_officers: normalizeValue(formData.get("additionalOfficers")),
+        force_occurred: normalizeValue(formData.get("forceOccurred")),
+        officer_used_weapon: normalizeValue(formData.get("officerUsedWeapon")),
+        weapon_used_by_officer: normalizeValue(formData.get("weaponUsedByOfficer")),
+        deadly_force: normalizeValue(formData.get("deadlyForce")),
+        officer_warned_subject: normalizeValue(formData.get("officerWarnedSubject")),
+        force_necessary: normalizeValue(formData.get("forceNecessary")),
+        force_used_to_subdue: normalizeValue(formData.get("forceUsedToSubdue")),
+        type_of_force_used: normalizeValue(formData.get("typeOfForceUsed")),
+        force_severity_level: normalizeValue(formData.get("forceSeverityLevel")),
+        specific_actions_taken: normalizeValue(formData.get("specificActionsTaken")),
+        duration_of_force_applied: normalizeValue(formData.get("durationOfForceApplied")),
+        reason_for_force: normalizeValue(formData.get("reasonForForce")),
+        circumstances_leading_to_force: normalizeValue(formData.get("circumstancesLeadingToForce")),
+        review_status: normalizeValue(formData.get("reviewStatus")) || "Draft",
+        ia_escalation: normalizeValue(formData.get("iaEscalation")) || "No",
+        supervisor_comments: normalizeValue(formData.get("supervisorComments")),
+        additional_comments: normalizeValue(formData.get("additionalComments"))
+      };
+    }
+
+    async function submitToSupabase(payload) {
+      const endpoint = `${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE}`;
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_ANON_KEY,
+          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+          "Prefer": "return=representation"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || "Submission failed.");
+      }
+
+      return response.json();
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (!validateCurrentStep()) {
+        setStatus("Please complete the required fields in this step before continuing.", "error");
+        return;
+      }
+
+      currentStep += 1;
+      updateProgress();
+      setStatus("Step updated.");
+    });
+
+    prevBtn.addEventListener("click", () => {
+      if (currentStep > 0) {
+        currentStep -= 1;
+        updateProgress();
+        setStatus("Moved to previous step.");
+      }
+    });
+
+    resetBtn.addEventListener("click", () => {
+      form.reset();
+      currentStep = 0;
+      setDefaultSubmissionTime();
+      toggleConditionalFields();
+      updateProgress();
+      resetPostSubmitActions();
+      setStatus("Form reset.");
+    });
+
+    subjectArmed.addEventListener("change", toggleConditionalFields);
+    officerUsedWeapon.addEventListener("change", toggleConditionalFields);
+    forceOccurred.addEventListener("change", toggleConditionalFields);
+
+    downloadPdfBtn.addEventListener("click", () => {
+      openPrintView();
+    });
+
+    emailBtn.addEventListener("click", () => {
+      if (!lastSubmittedPayload) return;
+      const desiredEmail = window.prompt("Enter the email address to send this report to:", "");
+      if (desiredEmail === null) return;
+      const subject = encodeURIComponent("Use of Force Report Submission");
+      const body = encodeURIComponent(buildEmailBody());
+      const to = encodeURIComponent(desiredEmail.trim());
+      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!validateCurrentStep()) {
+        setStatus("Please complete the required fields before submitting.", "error");
+        return;
+      }
+
+      const formData = new FormData(form);
+      const payload = buildPayload(formData);
+
+      submitBtn.disabled = true;
+      setStatus("Submitting report...");
+
+      try {
+        const result = await submitToSupabase(payload);
+        const record = Array.isArray(result) ? result[0] : null;
+        const idMessage = record && record.id ? ` Report ID: ${record.id}.` : "";
+        const attachment = formData.get("attachment");
+        const attachmentMessage = attachment && attachment.name ? " Attachment field captured in the form, but file storage is not connected yet." : "";
+        lastSubmittedPayload = {
+          ...payload,
+          attachment: attachment && attachment.name ? attachment.name : null,
+          report_id: record && record.id ? record.id : null
+        };
+        downloadPdfBtn.classList.remove("hidden");
+        emailBtn.classList.remove("hidden");
+        setStatus(`Report submitted successfully.${idMessage}${attachmentMessage} You can now download a PDF or open an email draft.`, "success");
+      } catch (error) {
+        setStatus(`Submission failed. ${error.message}`, "error");
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+
+    setDefaultSubmissionTime();
+    toggleConditionalFields();
+    updateProgress();
+  </script>
+</body>
+</html>
