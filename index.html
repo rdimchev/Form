@@ -13,10 +13,6 @@
       --border: #d7deea;
       --accent: #0f172a;
       --accent-2: #1d4ed8;
-      --success: #166534;
-      --success-bg: #ecfdf3;
-      --error: #b91c1c;
-      --error-bg: #fef2f2;
       --section: #eef4ff;
       --shadow: 0 14px 40px rgba(15, 23, 42, 0.08);
     }
@@ -43,12 +39,12 @@
     }
 
     .hero {
-      grid-template-columns: 1.3fr 0.7fr;
+      grid-template-columns: 1fr;
       margin-bottom: 22px;
     }
 
     .layout {
-      grid-template-columns: 1fr 320px;
+      grid-template-columns: 1fr;
       align-items: start;
     }
 
@@ -61,12 +57,6 @@
     }
 
     .hero-main { padding: 28px; }
-    .hero-side {
-      padding: 22px;
-      display: grid;
-      gap: 12px;
-      align-content: start;
-    }
 
     .eyebrow {
       display: inline-block;
@@ -85,7 +75,7 @@
       line-height: 1.15;
     }
 
-    .sub, .hint, .checklist, .actions p, .mini-card p {
+    .sub, .hint {
       color: var(--muted);
       line-height: 1.6;
     }
@@ -100,6 +90,12 @@
     .mini-card h3 {
       margin: 0 0 6px;
       font-size: 0.98rem;
+    }
+
+    .mini-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
     }
 
     .progress-wrap {
@@ -173,13 +169,8 @@
       font-weight: 700;
     }
 
-    .step-panel {
-      display: none;
-    }
-
-    .step-panel.active {
-      display: block;
-    }
+    .step-panel { display: none; }
+    .step-panel.active { display: block; }
 
     .section-title {
       margin: 0;
@@ -244,55 +235,12 @@
       padding: 10px;
     }
 
-    .required { color: var(--error); }
-
-    .sidebar {
-      position: sticky;
-      top: 18px;
-      display: grid;
-      gap: 16px;
-    }
-
-    .status, .setup, .workflow {
-      padding: 18px;
-    }
-
-    .status h2, .setup h2, .workflow h2 {
-      margin: 0 0 10px;
-      font-size: 1rem;
-    }
-
-    .status-box {
-      border-radius: 14px;
-      padding: 12px 14px;
-      font-size: 0.93rem;
-      line-height: 1.5;
-      border: 1px solid var(--border);
-      background: #f8fafc;
-    }
-
-    .status-box.success {
-      color: var(--success);
-      background: var(--success-bg);
-      border-color: #bbf7d0;
-    }
-
-    .status-box.error {
-      color: var(--error);
-      background: var(--error-bg);
-      border-color: #fecaca;
-    }
-
-    .checklist {
-      margin: 0;
-      padding-left: 18px;
-      font-size: 0.92rem;
-    }
+    .required { color: #b91c1c; }
 
     .actions {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       gap: 16px;
       flex-wrap: wrap;
       padding: 22px;
@@ -336,16 +284,6 @@
       cursor: not-allowed;
     }
 
-    @media (max-width: 980px) {
-      .hero, .layout {
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar {
-        position: static;
-      }
-    }
-
     @media (max-width: 760px) {
       .grid,
       .progress-steps {
@@ -356,7 +294,7 @@
         padding: 14px;
       }
 
-      .hero-main, .hero-side, .section-body, .actions, .progress-wrap {
+      .hero-main, .section-body, .actions, .progress-wrap {
         padding-left: 16px;
         padding-right: 16px;
       }
@@ -371,26 +309,16 @@
   <div class="page">
     <section class="hero">
       <div class="panel hero-main">
-        <div class="eyebrow">Deployable multi-step static app</div>
+        <div class="eyebrow">Use of Force Reporting Form</div>
         <h1>Use of Force Reporting System</h1>
-        <p class="sub">
-          This version organizes the form into sequential steps, adds conditional fields, standardizes key dropdowns,
-          and submits directly to Supabase. It is designed to be much simpler to complete than a long single-page form.
-        </p>
-      </div>
-      <div class="panel hero-side">
         <div class="mini-card">
-          <h3>Included</h3>
-          <p>Multi-step flow, progress indicator, conditional fields, required submission metadata, free-text comments, and file attachment input.</p>
-        </div>
-        <div class="mini-card">
-          <h3>Important</h3>
-          <p>The attachment field is included in the HTML flow, but file upload storage is not wired to Supabase Storage yet.</p>
+          <h3>Purpose of the Use of Force Form</h3>
+          <p>The purpose of the Use of Force form is to document the facts, circumstances, actions taken, and outcomes of any incident in which force is used. It is critical for officers to complete this form because it creates a clear and consistent official record, supports supervisory and command-level review, reinforces accountability by requiring justification and documentation of actions, and helps demonstrate compliance with departmental policy and legal standards. Accurate completion of this form also supports internal investigations, training review, risk management, and defensible recordkeeping when incidents are later reviewed or challenged.</p>
         </div>
       </div>
     </section>
 
-    <section class="layout">
+    <section class="layout" id="mainLayout">
       <main class="panel">
         <div class="progress-wrap">
           <div class="progress-header">
@@ -402,7 +330,7 @@
           <div class="progress-bar">
             <div class="progress-fill" id="progressFill"></div>
           </div>
-          <div class="progress-steps" id="progressSteps">
+          <div class="progress-steps">
             <div class="progress-step active">1. Submission</div>
             <div class="progress-step">2. Incident</div>
             <div class="progress-step">3. Subject</div>
@@ -691,27 +619,6 @@
             <h2 class="section-title">Review, Comments, and Attachments</h2>
             <div class="section-body">
               <div class="grid">
-                <div class="field">
-                  <label for="reviewStatus">Review Status</label>
-                  <select id="reviewStatus" name="reviewStatus">
-                    <option value="Draft">Draft</option>
-                    <option value="Submitted">Submitted</option>
-                    <option value="Supervisor Review">Supervisor Review</option>
-                    <option value="IA Escalated">IA Escalated</option>
-                    <option value="Closed">Closed</option>
-                  </select>
-                </div>
-                <div class="field">
-                  <label for="iaEscalation">Escalate to Internal Affairs?</label>
-                  <select id="iaEscalation" name="iaEscalation">
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                  </select>
-                </div>
-                <div class="field full">
-                  <label for="supervisorComments">Supervisor Comments</label>
-                  <textarea id="supervisorComments" name="supervisorComments"></textarea>
-                </div>
                 <div class="field full">
                   <label for="additionalComments">Additional Comments</label>
                   <textarea id="additionalComments" name="additionalComments"></textarea>
@@ -719,14 +626,12 @@
                 <div class="field full">
                   <label for="attachment">File Attachment</label>
                   <input id="attachment" name="attachment" type="file" />
-                  <p class="hint">This input is present in the form, but attachment upload is not yet connected to Supabase Storage in this version.</p>
                 </div>
               </div>
             </div>
           </section>
 
           <div class="actions">
-            <p>Replace the config values in the script with your Supabase project URL and publishable key. Then deploy this as a static site.</p>
             <div class="btn-row">
               <button type="button" class="btn-ghost" id="prevBtn">Previous</button>
               <button type="button" class="btn-secondary" id="nextBtn">Next</button>
@@ -736,42 +641,11 @@
           </div>
         </form>
       </main>
-
-      <aside class="sidebar">
-        <section class="panel status">
-          <h2>Submission Status</h2>
-          <div id="statusBox" class="status-box">Ready to begin.</div>
-        </section>
-
-        <section class="panel workflow">
-          <h2>Sequential flow</h2>
-          <ul class="checklist">
-            <li>Start with reporter metadata and camera status.</li>
-            <li>Record incident basics before subject details.</li>
-            <li>Only show force-specific questions if force was used.</li>
-            <li>Finish with review status, comments, and attachment.</li>
-          </ul>
-        </section>
-
-        <section class="panel setup">
-          <h2>Deployment</h2>
-          <ul class="checklist">
-            <li>Save this file as <strong>index.html</strong>.</li>
-            <li>Run your Supabase SQL setup first.</li>
-            <li>Deploy the folder to Netlify, Vercel, GitHub Pages, or Cloudflare Pages.</li>
-          </ul>
-        </section>
-      </aside>
     </section>
   </div>
 
   <script>
-    const SUPABASE_URL = "https://ftfqyzjzfzvtpinngpry.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_H0SfaEUskBSI1x3FrT1qJw_aPBnEvxV";
-    const SUPABASE_TABLE = "use_of_force_reports";
-
     const form = document.getElementById("incidentForm");
-    const statusBox = document.getElementById("statusBox");
     const submitBtn = document.getElementById("submitBtn");
     const resetBtn = document.getElementById("resetBtn");
     const nextBtn = document.getElementById("nextBtn");
@@ -788,6 +662,7 @@
     const forceOccurred = document.getElementById("forceOccurred");
     const forceSection = document.getElementById("forceSection");
     const reportSubmissionTime = document.getElementById("reportSubmissionTime");
+    const mainLayout = document.getElementById("mainLayout");
 
     const stepTitles = [
       "Step 1 of 5 — Submission Details",
@@ -798,17 +673,6 @@
     ];
 
     let currentStep = 0;
-
-    function setStatus(message, type = "default") {
-      statusBox.textContent = message;
-      statusBox.className = "status-box" + (type === "success" ? " success" : type === "error" ? " error" : "");
-    }
-
-    function normalizeValue(value) {
-      if (typeof value !== "string") return value;
-      const trimmed = value.trim();
-      return trimmed === "" ? null : trimmed;
-    }
 
     function setDefaultSubmissionTime() {
       if (reportSubmissionTime.value) return;
@@ -858,90 +722,28 @@
       return true;
     }
 
-    function buildPayload(formData) {
-      return {
-        submitted_by: normalizeValue(formData.get("submittedBy")),
-        badge_number: normalizeValue(formData.get("badgeNumber")),
-        report_submission_time: normalizeValue(formData.get("reportSubmissionTime")),
-        body_camera_active: normalizeValue(formData.get("bodyCameraActive")),
-        case_number: normalizeValue(formData.get("caseNumber")),
-        incident_type: normalizeValue(formData.get("incidentType")),
-        date_of_incident: normalizeValue(formData.get("dateOfIncident")),
-        time_of_incident: normalizeValue(formData.get("timeOfIncident")),
-        location_of_incident: normalizeValue(formData.get("locationOfIncident")),
-        subject_id: normalizeValue(formData.get("subjectId")),
-        subject_name: normalizeValue(formData.get("subjectName")),
-        age: formData.get("age") ? Number(formData.get("age")) : null,
-        gender: normalizeValue(formData.get("gender")),
-        race_ethnicity: normalizeValue(formData.get("raceEthnicity")),
-        subject_condition: normalizeValue(formData.get("subjectCondition")),
-        subject_medical_history: normalizeValue(formData.get("subjectMedicalHistory")),
-        subject_armed: normalizeValue(formData.get("subjectArmed")),
-        subject_weapon: normalizeValue(formData.get("subjectWeapon")),
-        medical_treatment_required: normalizeValue(formData.get("medicalTreatmentRequired")),
-        injuries_to_subject: normalizeValue(formData.get("injuriesToSubject")),
-        officer_id: normalizeValue(formData.get("officerId")),
-        officer_name: normalizeValue(formData.get("officerName")),
-        rank: normalizeValue(formData.get("rank")),
-        division: normalizeValue(formData.get("division")),
-        additional_officers: normalizeValue(formData.get("additionalOfficers")),
-        force_occurred: normalizeValue(formData.get("forceOccurred")),
-        officer_used_weapon: normalizeValue(formData.get("officerUsedWeapon")),
-        weapon_used_by_officer: normalizeValue(formData.get("weaponUsedByOfficer")),
-        deadly_force: normalizeValue(formData.get("deadlyForce")),
-        officer_warned_subject: normalizeValue(formData.get("officerWarnedSubject")),
-        force_necessary: normalizeValue(formData.get("forceNecessary")),
-        force_used_to_subdue: normalizeValue(formData.get("forceUsedToSubdue")),
-        type_of_force_used: normalizeValue(formData.get("typeOfForceUsed")),
-        force_severity_level: normalizeValue(formData.get("forceSeverityLevel")),
-        specific_actions_taken: normalizeValue(formData.get("specificActionsTaken")),
-        duration_of_force_applied: normalizeValue(formData.get("durationOfForceApplied")),
-        reason_for_force: normalizeValue(formData.get("reasonForForce")),
-        circumstances_leading_to_force: normalizeValue(formData.get("circumstancesLeadingToForce")),
-        review_status: normalizeValue(formData.get("reviewStatus")) || "Draft",
-        ia_escalation: normalizeValue(formData.get("iaEscalation")) || "No",
-        supervisor_comments: normalizeValue(formData.get("supervisorComments")),
-        additional_comments: normalizeValue(formData.get("additionalComments"))
-      };
-    }
-
-    async function submitToSupabase(payload) {
-      const endpoint = `${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE}`;
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "apikey": SUPABASE_ANON_KEY,
-          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-          "Prefer": "return=representation"
-        },
-        body: JSON.stringify(payload)
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(errorText || "Submission failed.");
+    function buildReportText(formData) {
+      const entries = [];
+      for (const [key, value] of formData.entries()) {
+        if (value instanceof File) {
+          entries.push(`${key}: ${value && value.name ? value.name : "No file attached"}`);
+        } else {
+          entries.push(`${key}: ${value}`);
+        }
       }
-
-      return response.json();
+      return `Use of Force Report\n\n${entries.join("\n")}`;
     }
 
     nextBtn.addEventListener("click", () => {
-      if (!validateCurrentStep()) {
-        setStatus("Please complete the required fields in this step before continuing.", "error");
-        return;
-      }
-
+      if (!validateCurrentStep()) return;
       currentStep += 1;
       updateProgress();
-      setStatus("Step updated.");
     });
 
     prevBtn.addEventListener("click", () => {
       if (currentStep > 0) {
         currentStep -= 1;
         updateProgress();
-        setStatus("Moved to previous step.");
       }
     });
 
@@ -951,44 +753,76 @@
       setDefaultSubmissionTime();
       toggleConditionalFields();
       updateProgress();
-      setStatus("Form reset.");
     });
 
     subjectArmed.addEventListener("change", toggleConditionalFields);
     officerUsedWeapon.addEventListener("change", toggleConditionalFields);
     forceOccurred.addEventListener("change", toggleConditionalFields);
 
-    form.addEventListener("submit", async (event) => {
+    form.addEventListener("submit", (event) => {
       event.preventDefault();
-
-      if (!validateCurrentStep()) {
-        setStatus("Please complete the required fields before submitting.", "error");
-        return;
-      }
+      if (!validateCurrentStep()) return;
 
       const formData = new FormData(form);
-      const payload = buildPayload(formData);
+      const attachmentInput = document.getElementById("attachment");
+      const attachmentName = attachmentInput && attachmentInput.files && attachmentInput.files[0]
+        ? attachmentInput.files[0].name
+        : "No attachment included";
 
-      submitBtn.disabled = true;
-      setStatus("Submitting report...");
+      const submittedBy = document.getElementById("submittedBy").value || "Officer";
+      const caseNumber = document.getElementById("caseNumber").value || "N/A";
+      const incidentDate = document.getElementById("dateOfIncident").value || "N/A";
+      const incidentType = document.getElementById("incidentType").value || "N/A";
+      const reportText = buildReportText(formData);
 
-      try {
-        const result = await submitToSupabase(payload);
-        const record = Array.isArray(result) ? result[0] : null;
-        const idMessage = record && record.id ? ` Report ID: ${record.id}.` : "";
-        const attachment = formData.get("attachment");
-        const attachmentMessage = attachment && attachment.name ? " Attachment field captured in the form, but file storage is not connected yet." : "";
-        setStatus(`Report submitted successfully.${idMessage}${attachmentMessage}`, "success");
-        form.reset();
-        currentStep = 0;
-        setDefaultSubmissionTime();
-        toggleConditionalFields();
-        updateProgress();
-      } catch (error) {
-        setStatus(`Submission failed. ${error.message}`, "error");
-      } finally {
-        submitBtn.disabled = false;
-      }
+      mainLayout.innerHTML = `
+        <main class="panel" style="padding: 36px;">
+          <div class="eyebrow">Submission complete</div>
+          <h1 style="margin-bottom: 12px;">Thank you for your submission</h1>
+          <p class="sub" style="max-width: 800px; margin-bottom: 22px;">
+            Please download or email a copy of the submitted report for your records and any required internal routing.
+          </p>
+          <div class="mini-card" style="margin-bottom: 18px;">
+            <h3>Report summary</h3>
+            <p><strong>Submitted by:</strong> ${submittedBy}</p>
+            <p><strong>Case number:</strong> ${caseNumber}</p>
+            <p><strong>Incident date:</strong> ${incidentDate}</p>
+            <p><strong>Incident type:</strong> ${incidentType}</p>
+            <p><strong>Attachment:</strong> ${attachmentName}</p>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn-primary" id="downloadCopyBtn">Download Copy</button>
+            <button type="button" class="btn-secondary" id="emailCopyBtn">Email Copy</button>
+            <button type="button" class="btn-ghost" id="startNewBtn">Start New Report</button>
+          </div>
+        </main>
+      `;
+
+      const downloadBtn = document.getElementById("downloadCopyBtn");
+      const emailBtn = document.getElementById("emailCopyBtn");
+      const startNewBtn = document.getElementById("startNewBtn");
+
+      downloadBtn.addEventListener("click", () => {
+        const blob = new Blob([reportText], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `use-of-force-report-${caseNumber || "report"}.txt`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+      });
+
+      emailBtn.addEventListener("click", () => {
+        const subject = encodeURIComponent(`Use of Force Report - Case ${caseNumber}`);
+        const body = encodeURIComponent(reportText);
+        window.location.href = `mailto:?subject=${subject}&body=${body}`;
+      });
+
+      startNewBtn.addEventListener("click", () => {
+        window.location.reload();
+      });
     });
 
     setDefaultSubmissionTime();
