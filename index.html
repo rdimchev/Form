@@ -278,7 +278,7 @@
         </div>
         <div class="mini-card">
           <h3>Purpose of the Use of Force Form</h3>
-          <p>This form is used to document incidents in which force was used or considered by an officer. The information collected helps ensure accurate reporting, accountability, and proper supervisory review in accordance with departmental policies. Officers should complete the form as soon as possible after an incident, providing clear and factual details about the circumstances, actions taken, and individuals involved. The report will be reviewed by supervisory staff as part of the department’s standard use-of-force documentation and oversight process.</p>
+          <p>Use this form to document the incident, the force applied, and the outcome. A complete report supports review, accountability, policy compliance, and future investigation or training needs.</p>
         </div>
       </div>
     </section>
@@ -358,24 +358,39 @@
                   <input id="timeOfIncident" name="timeOfIncident" type="time" required />
                 </div>
                 <div class="subheading">Location of Incident</div>
+                <div class="field">
+                  <label for="locationType">Location Type <span class="required">*</span></label>
+                  <select id="locationType" name="locationType" required>
+                    <option value="">Select</option>
+                    <option>School / Campus</option>
+                    <option>Vehicle</option>
+                    <option>Street / Sidewalk</option>
+                    <option>Residence</option>
+                    <option>Other Public Space</option>
+                    <option>Retail / Business</option>
+                    <option>Transit Hub</option>
+                    <option>Parking Lot</option>
+                    <option>Unknown</option>
+                  </select>
+                </div>
                 <div class="field full">
-                  <label for="incidentAddress">Address <span class="required">*</span></label>
-                  <input id="incidentAddress" name="incidentAddress" type="text" required />
+                  <label for="incidentAddress">Address</label>
+                  <input id="incidentAddress" name="incidentAddress" type="text" />
                 </div>
                 <div class="field">
-                  <label for="incidentCity">City <span class="required">*</span></label>
-                  <input id="incidentCity" name="incidentCity" type="text" required />
+                  <label for="incidentCity">City</label>
+                  <input id="incidentCity" name="incidentCity" type="text" />
                 </div>
                 <div class="field">
-                  <label for="incidentState">State <span class="required">*</span></label>
-                  <select id="incidentState" name="incidentState" required>
+                  <label for="incidentState">State</label>
+                  <select id="incidentState" name="incidentState">
                     <option value="">Select</option>
                     <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option><option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option><option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option><option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option><option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option><option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option><option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option><option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option><option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option><option>Unknown</option>
                   </select>
                 </div>
                 <div class="field">
-                  <label for="incidentZip">ZIP <span class="required">*</span></label>
-                  <input id="incidentZip" name="incidentZip" type="text" required />
+                  <label for="incidentZip">ZIP</label>
+                  <input id="incidentZip" name="incidentZip" type="text" />
                 </div>
               </div>
             </div>
@@ -427,14 +442,10 @@
                   <label for="subjectCondition">Subject Condition <span class="required">*</span></label>
                   <select id="subjectCondition" name="subjectCondition" required>
                     <option value="">Select</option>
-                    <option>Calm</option>
-                    <option>Resisting</option>
-                    <option>Aggressive</option>
-                    <option>Fleeing</option>
-                    <option>Intoxicated</option>
-                    <option>Mental Crisis</option>
-                    <option>Injured</option>
-                    <option>Unknown</option>
+                    <option>No Injury</option>
+                    <option>Minor Injury</option>
+                    <option>Hospitalized</option>
+                    <option>Deceased</option>
                   </select>
                 </div>
                 <div class="field">
@@ -448,7 +459,15 @@
                 </div>
                 <div class="field hidden" id="subjectWeaponField">
                   <label for="subjectWeapon">Weapon possessed by subject <span class="required">*</span></label>
-                  <input id="subjectWeapon" name="subjectWeapon" type="text" />
+                  <select id="subjectWeapon" name="subjectWeapon">
+                    <option value="">Select</option>
+                    <option>Blunt Object</option>
+                    <option>Firearm</option>
+                    <option>Improvised Weapon</option>
+                    <option>Knife</option>
+                    <option>Other</option>
+                    <option>Vehicle</option>
+                  </select>
                 </div>
                 <div class="field">
                   <label for="medicalTreatmentRequired">Medical Treatment Required <span class="required">*</span></label>
@@ -459,13 +478,25 @@
                     <option>Unknown</option>
                   </select>
                 </div>
-                <div class="field full">
-                  <label for="subjectMedicalHistory">Subject Medical History <span class="required">*</span></label>
+                <div class="field full" id="subjectMedicalHistoryField">
+                  <label for="subjectMedicalHistory">Subject Medical History <span class="required injury-required">*</span></label>
                   <textarea id="subjectMedicalHistory" name="subjectMedicalHistory" required></textarea>
                 </div>
-                <div class="field full">
-                  <label for="injuriesToSubject">Injuries to Subject <span class="required">*</span></label>
-                  <textarea id="injuriesToSubject" name="injuriesToSubject" required></textarea>
+                <div class="field full" id="injuriesToSubjectField">
+                  <label for="injuriesToSubject">Injuries to Subject <span class="required injury-required">*</span></label>
+                  <select id="injuriesToSubject" name="injuriesToSubject" required>
+                    <option value="">Select</option>
+                    <option>None</option>
+                    <option>Abrasion / Contusion</option>
+                    <option>Laceration</option>
+                    <option>Sprain / Strain</option>
+                    <option>Fracture</option>
+                    <option>Loss of Consciousness</option>
+                    <option>Gunshot Wound</option>
+                    <option>Stab / Puncture</option>
+                    <option>Other</option>
+                    <option>Unknown</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -601,7 +632,12 @@
                   </div>
                   <div class="field hidden" id="weaponUsedField">
                     <label for="weaponUsedByOfficer">Weapon Used by Officer <span class="required label-required">*</span></label>
-                    <input id="weaponUsedByOfficer" name="weaponUsedByOfficer" type="text" />
+                    <select id="weaponUsedByOfficer" name="weaponUsedByOfficer">
+                      <option value="">Select</option>
+                      <option>Baton</option>
+                      <option>Firearm</option>
+                      <option>Taser</option>
+                    </select>
                   </div>
                   <div class="field">
                     <label for="deadlyForce">Use of Deadly Force <span class="required label-required">*</span></label>
@@ -694,8 +730,13 @@
     const progressSteps = Array.from(document.querySelectorAll(".progress-step"));
     const stepPanels = Array.from(document.querySelectorAll(".step-panel"));
     const subjectArmed = document.getElementById("subjectArmed");
+    const subjectCondition = document.getElementById("subjectCondition");
     const subjectWeaponField = document.getElementById("subjectWeaponField");
     const subjectWeapon = document.getElementById("subjectWeapon");
+    const subjectMedicalHistoryField = document.getElementById("subjectMedicalHistoryField");
+    const subjectMedicalHistory = document.getElementById("subjectMedicalHistory");
+    const injuriesToSubjectField = document.getElementById("injuriesToSubjectField");
+    const injuriesToSubject = document.getElementById("injuriesToSubject");
     const officerUsedWeapon = document.getElementById("officerUsedWeapon");
     const weaponUsedField = document.getElementById("weaponUsedField");
     const weaponUsedByOfficer = document.getElementById("weaponUsedByOfficer");
@@ -752,10 +793,22 @@
       const subjectArmedYes = subjectArmed.value === "Yes";
       subjectWeaponField.classList.toggle("hidden", !subjectArmedYes);
       subjectWeapon.required = subjectArmedYes;
+      if (!subjectArmedYes) subjectWeapon.value = "";
+
+      const hasSubjectInjury = subjectCondition.value !== "No Injury" && subjectCondition.value !== "";
+      subjectMedicalHistoryField.classList.toggle("hidden", !hasSubjectInjury);
+      injuriesToSubjectField.classList.toggle("hidden", !hasSubjectInjury);
+      subjectMedicalHistory.required = hasSubjectInjury;
+      injuriesToSubject.required = hasSubjectInjury;
+      if (!hasSubjectInjury) {
+        subjectMedicalHistory.value = "";
+        injuriesToSubject.value = "";
+      }
 
       const officerWeaponYes = officerUsedWeapon.value === "Yes";
       weaponUsedField.classList.toggle("hidden", !officerWeaponYes);
       weaponUsedByOfficer.required = officerWeaponYes;
+      if (!officerWeaponYes) weaponUsedByOfficer.value = "";
 
       const forceUsed = forceOccurred.value === "Yes";
       forceSection.classList.toggle("hidden", !forceUsed);
@@ -834,6 +887,7 @@
     });
 
     subjectArmed.addEventListener("change", toggleConditionalFields);
+    subjectCondition.addEventListener("change", toggleConditionalFields);
     officerUsedWeapon.addEventListener("change", toggleConditionalFields);
     forceOccurred.addEventListener("change", toggleConditionalFields);
     reasonForForce.addEventListener("change", toggleConditionalFields);
